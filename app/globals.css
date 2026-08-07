@@ -1,26 +1,162 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   AINTHINAI — token system
+   ---------------------------------------------------------------------------
+   There is no single palette. Each of the five floors owns one, derived from
+   its element rather than picked:
+
+     Earth   clay and ochre on dark loam
+     Water   depth, reflected light
+     Fire    ember on charred timber
+     Air     the one pale world — lime wash and linen
+     Sky     night, and the absence of light
+
+   <ElementProvider> writes the active set onto <html>. Everything downstream
+   reads the variables, so no component needs to know a world change is under
+   way — they simply inherit different weather.
+--------------------------------------------------------------------------- */
+
+/* The palette variables are registered rather than left as plain custom
+   properties. This matters: an *unregistered* custom property has no type, so
+   the browser cannot interpolate it, and a `transition` on any property that
+   reads it silently fails — background-color simply keeps its old computed
+   value while the variable underneath changes. Typing them as <color> makes
+   the variables themselves animatable, and everything reading them follows. */
+@property --ground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #17120e;
+}
+@property --ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #efe6d8;
+}
+@property --muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #9c8d79;
+}
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c08a3e;
+}
+
+/* Earth is the server-rendered default — floor one, and the first card in the
+   carousel. Keep these in step with `initialId` in app/page.tsx. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ground: #17120e;
+  --ink: #efe6d8;
+  --muted: #9c8d79;
+  --accent: #c08a3e;
+  color-scheme: dark;
+
+  /* One transition drives the entire world change. Every surface that reads a
+     palette variable — grounds, text, accents, the sun, the veil — moves on
+     this single curve without declaring a transition of its own. */
+  transition: --ground 1250ms var(--ease-world), --ink 1250ms var(--ease-world),
+    --muted 1250ms var(--ease-world), --accent 1250ms var(--ease-world);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ground: var(--ground);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+
+  --font-display: var(--font-boska);
+  --font-body: var(--font-switzer);
+  --font-tamil: var(--font-tamil);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --ease-world: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sun: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  html {
+    /* Lenis owns scrolling; native smooth would fight it. */
+    scroll-behavior: auto;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-weight: 300;
+    /* No transition here on purpose — the variables themselves animate on
+       :root, so a second transition would only add lag on top of them. */
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--ground);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+  }
+
+  /* Tamil is set as a display element, not as a footnote to the roman. */
+  :lang(ta) {
+    font-family: var(--font-tamil), sans-serif;
+    letter-spacing: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .font-tamil {
+    font-family: var(--font-tamil), sans-serif;
+    letter-spacing: 0;
+  }
+
+  /* The interface's utility voice: hours, floors, areas, section markers. */
+  .u-label {
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .u-readout {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .rule {
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+}
+
+/* Every world change and scroll effect degrades to an instant, legible state.
+   Nothing is ever hidden behind an animation that will not run. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  :root {
+    transition: none;
+  }
 }
