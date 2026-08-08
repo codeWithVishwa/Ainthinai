@@ -12,6 +12,7 @@ import "dotenv/config";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
+import { elements } from "../content/elements";
 import { rooms as seedRooms } from "../content/rooms";
 import { posts as seedPosts } from "../content/journal";
 import { faqGroups, gallery as seedGallery } from "../content/site";
@@ -53,6 +54,7 @@ async function seedRoomsAndPlans() {
   let updated = 0;
 
   for (const [i, r] of seedRooms.entries()) {
+    const el = elements.find((e) => e.id === r.elementId);
 
     const doc = {
       slug: r.slug,
@@ -60,6 +62,7 @@ async function seedRoomsAndPlans() {
       tamil: r.tamil,
       elementId: r.elementId,
       floor: r.floor,
+      floorLabel: el?.floorLabel ?? String(r.floor),
       category: r.category,
       summary: r.summary,
       description: r.description,
@@ -142,6 +145,17 @@ async function seedRoomsAndPlans() {
       },
       { upsert: true },
     );
+  }
+
+  // The room set changed when the client supplied real names; drop anything
+  // no longer in the content file so the old slugs do not linger.
+  const keep = seedRooms.map((r) => r.slug);
+  const stale = await Room.find({ slug: { $nin: keep } }).select("_id slug").lean();
+  if (stale.length) {
+    const ids = stale.map((r) => r._id);
+    await RatePlan.deleteMany({ room: { $in: ids } });
+    await Room.deleteMany({ _id: { $in: ids } });
+    console.log(`  pruned: ${stale.length} obsolete rooms (${stale.map((r) => r.slug).join(", ")})`);
   }
 
   console.log(`  rooms: ${created} created, ${updated} updated`);

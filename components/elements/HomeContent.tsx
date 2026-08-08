@@ -24,15 +24,16 @@ export default function HomeContent() {
           <div className="grid gap-16 lg:grid-cols-[1.3fr_1fr] lg:gap-24">
             <Reveal>
               <h2 className="font-display text-[clamp(1.8rem,3.6vw,3.4rem)] font-light leading-[1.14]">
-                Five floors, five elements. Each one built from a different
-                material and kept at a different temperature.
+                Five levels, five landscapes. The ground is earth, the first
+                floor is rivers, and the roof belongs to the sea.
               </h2>
             </Reveal>
             <Reveal delay={0.15} className="lg:pt-3">
               <p className="text-[0.95rem] leading-[1.9] text-muted">
                 Not five versions of the same room in different colours — five
-                buildings inside one building. The clay floor holds the cool. The
-                water floor moves the light. The fourth floor has no doors.
+                buildings inside one building. The clay floor holds the cool, the
+                river floor moves the light, and the second floor has no doors
+                at all.
               </p>
               <p className="mt-6 text-[0.95rem] leading-[1.9] text-muted">
                 You are standing on one of them now. Pick another and the whole
@@ -47,7 +48,7 @@ export default function HomeContent() {
               className="grid grid-cols-2 gap-x-10 gap-y-8 border-t pt-10 sm:grid-cols-3 lg:grid-cols-5"
               style={{ borderColor: "color-mix(in srgb, currentColor 14%, transparent)" }}
             >
-              <Spec k="Element" v={shown.english} tamil={shown.tamil} />
+              <Spec k="Landscape" v={shown.english} tamil={shown.tamil} />
               <Spec k="Material" v={shown.material} />
               <Spec k="Light" v={shown.light} />
               <Spec k="Temperature" v={shown.temperature} />
@@ -62,9 +63,9 @@ export default function HomeContent() {
         <div className={INNER}>
           <Swap index={0}>
             <div className="mb-16 flex flex-wrap items-baseline gap-x-6 gap-y-2">
-              <span className="u-label opacity-40">Floor {shown.floor}</span>
+              <span className="u-label opacity-40">{shown.floorLabel}</span>
               <h2 className="font-display text-[clamp(1.9rem,4.4vw,3.8rem)] font-light leading-none">
-                Rooms in {shown.english}
+                Rooms on the {shown.english.toLowerCase()} floor
               </h2>
               <span lang="ta" className="font-tamil text-2xl opacity-45">
                 {shown.tamil}
@@ -143,8 +144,8 @@ export default function HomeContent() {
           <Reveal>
             <p className="u-label mb-4 opacity-40">{resort.tagline}</p>
             <h2 className="mb-16 max-w-3xl font-display text-[clamp(1.9rem,4.4vw,3.6rem)] font-light leading-[1.08]">
-              This isn&rsquo;t a hotel with five themes. It is five worlds that
-              happen to share a lift.
+              This isn&rsquo;t a hotel with five themes. It is five landscapes
+              that happen to share a lift.
             </h2>
           </Reveal>
 

@@ -70,7 +70,7 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
             <Reveal>
               <div className="flex flex-wrap items-center gap-3">
                 <Tag>{room.category}</Tag>
-                <Tag>Floor {room.floor} · {el.english}</Tag>
+                <Tag>{el.floorLabel} · {el.english}</Tag>
                 {room.rackRate && <Tag>Offer</Tag>}
               </div>
 
@@ -143,7 +143,7 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
                 <Spec k="Beds" v={room.beds} />
                 <Spec k="View" v={room.view} />
                 <Spec k="Minimum" v={`${room.minNights} nights`} />
-                <Spec k="Floor" v={`${room.floor} · ${el.english}`} />
+                <Spec k="Floor" v={`${el.floorLabel} · ${el.english}`} />
               </dl>
 
               <div className="mt-7 flex flex-col gap-3">

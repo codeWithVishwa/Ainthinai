@@ -80,7 +80,7 @@ export default async function ConfirmationPage({
                 className="u-label absolute left-3 top-3 rounded-md px-2 py-1"
                 style={{ backgroundColor: "rgba(0,0,0,0.5)", color: "rgba(255,255,255,0.9)", fontSize: "0.55rem" }}
               >
-                Floor {room.floor} · {el.english}
+                {el.floorLabel} · {el.english}
               </span>
             </div>
 

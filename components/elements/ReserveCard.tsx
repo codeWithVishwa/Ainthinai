@@ -68,7 +68,7 @@ export default function ReserveCard() {
         Plan your stay
       </h2>
       <p className="mt-1.5 text-xs leading-snug text-muted">
-        Pick a floor. Each one is a different element.
+        Pick a level. Each one is a different landscape.
       </p>
 
       {/* Floor — the same state the carousel drives */}
@@ -101,7 +101,7 @@ export default function ReserveCard() {
                   className="u-readout block text-sm leading-none"
                   style={{ color: on ? "var(--accent)" : undefined, opacity: on ? 1 : 0.55 }}
                 >
-                  {String(el.floor).padStart(2, "0")}
+                  {el.badge}
                 </span>
               </button>
             );

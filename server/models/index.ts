@@ -66,8 +66,8 @@ export const MEAL_PLANS = [
 ] as const;
 export type MealPlan = (typeof MEAL_PLANS)[number];
 
-/** The five elemental floors. Mirrors content/elements.ts. */
-export const ELEMENT_IDS = ["earth", "water", "fire", "air", "sky"] as const;
+/** The five landscape floors. Mirrors content/elements.ts. */
+export const ELEMENT_IDS = ["earth", "river", "hill", "peak", "ocean"] as const;
 export type ElementId = (typeof ELEMENT_IDS)[number];
 
 export const ROOM_CATEGORIES = ["Room", "Suite", "House"] as const;

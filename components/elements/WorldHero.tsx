@@ -90,7 +90,7 @@ export default function WorldHero() {
             <div className="order-1 lg:order-none">
               <Swap index={0}>
                 <p className="u-label mb-5 opacity-60">
-                  Floor {shown.floor} · {shown.temperature} · {shown.quality}
+                  {shown.floorLabel} · {shown.temperature} · {shown.quality}
                 </p>
               </Swap>
 

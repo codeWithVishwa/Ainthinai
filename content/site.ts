@@ -136,11 +136,11 @@ export const faqGroups: FaqGroup[] = [
 -------------------------------------------------------------------------- */
 
 export const contact = {
-  address: ["Ainthinai", "Kollimalai Road", "Namakkal district", "Tamil Nadu 637411", "India"],
-  phone: "+91 44 4000 1200",
-  reservations: "+91 44 4000 1201",
-  email: "stay@ainthinai.example",
-  press: "press@ainthinai.example",
+  address: ["drsiddarthresidency", "Kollimalai Road", "Namakkal district", "Tamil Nadu 637411", "India"],
+  phone: "+91 9876543210",
+  reservations: "+91 9876543210",
+  email: "stay@drsiddarthresidency.com",
+  press: "press@drsiddarthresidency.com",
   coords: "11°21′N 78°20′E",
   hours: [
     { k: "Reception", v: "24 hours" },

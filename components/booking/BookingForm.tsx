@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { money } from "@/content/elements";
-import { rooms, findRoom } from "@/content/rooms";
+import { rooms, findRoom, roomElement } from "@/content/rooms";
 import { RULE } from "../ui/primitives";
 
 /**
@@ -117,7 +117,7 @@ export default function BookingForm({ initialRoom }: { initialRoom?: string }) {
               >
                 {rooms.map((r) => (
                   <option key={r.slug} value={r.slug} style={{ color: "#111" }}>
-                    {r.name} — floor {r.floor}, {r.category}, {money(r.rate)}/night
+                    {r.name} — {roomElement(r).floorLabel}, {r.category}, {money(r.rate)}/night
                   </option>
                 ))}
               </select>
@@ -220,7 +220,7 @@ export default function BookingForm({ initialRoom }: { initialRoom?: string }) {
         <div className="rounded-[18px] border p-6" style={{ borderColor: RULE }}>
           <h2 className="font-display text-xl leading-none">{room.name}</h2>
           <p className="u-label mt-2 opacity-45">
-            Floor {room.floor} · {room.category} · sleeps {room.capacity}
+            {roomElement(room).floorLabel} · {room.category} · sleeps {room.capacity}
           </p>
 
           <dl className="mt-6 flex flex-col gap-3 border-t pt-5 text-sm" style={{ borderColor: RULE }}>

@@ -9,7 +9,7 @@ import { rateRange, rooms } from "@/content/rooms";
 export const metadata: Metadata = {
   title: "Rooms",
   description:
-    "Ten rooms across five floors. Each floor is built from a different material and holds a different temperature.",
+    "Twelve rooms across five levels — earth, rivers, hills, peaks and the roof.",
 };
 
 export default function RoomsPage() {
@@ -19,7 +19,7 @@ export default function RoomsPage() {
     <>
       <PageHero
         eyebrow="Rooms"
-        title="Ten rooms, five floors, no two alike"
+        title="Twelve rooms, five levels, no two alike"
         standfirst="Rooms are not graded here — they are placed. Which floor you take decides the material around you, the light you get, and how warm the room runs. Pick the one you want to wake up in."
         photo="photo-1631049307264-da0ec9d70304"
       />
@@ -27,10 +27,10 @@ export default function RoomsPage() {
       <Section className="pt-24 lg:pt-32">
         <Reveal>
           <dl className="grid grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-4">
-            <Spec k="Rooms" v="Ten" />
-            <Spec k="Floors" v="Five, one per element" />
+            <Spec k="Rooms" v="Twelve" />
+            <Spec k="Levels" v="Five, one per landscape" />
             <Spec k="From" v={money(min)} sub="per night, breakfast included" />
-            <Spec k="To" v={money(max)} sub="Vaan, the roof house" />
+            <Spec k="To" v={money(max)} sub="Ratnakara, the roof house" />
           </dl>
         </Reveal>
       </Section>
@@ -44,7 +44,7 @@ export default function RoomsPage() {
           return (
             <Section key={el.id} className="pt-24 lg:pt-32">
               <Marker>
-                Floor {el.floor} · {el.english} · {el.temperature}
+                {el.floorLabel} · {el.english} · {el.temperature}
               </Marker>
 
               <Reveal>

@@ -13,7 +13,10 @@ export interface RoomDoc {
   name: string;
   tamil: string;
   elementId: ElementId;
+  /** 0 = ground, 4 = rooftop. */
   floor: number;
+  /** What the lift button says: G, 1F, 2F, 3F, Rooftop. */
+  floorLabel: string;
   category: RoomCategory;
   summary: string;
   description: string[];
@@ -66,7 +69,9 @@ const roomSchema = new Schema<RoomDoc>(
     name: { type: String, required: true, trim: true },
     tamil: { type: String, default: "", trim: true },
     elementId: { type: String, enum: ELEMENT_IDS, required: true, index: true },
-    floor: { type: Number, required: true, min: 1, index: true },
+    // 0 = ground floor, 4 = rooftop.
+    floor: { type: Number, required: true, min: 0, index: true },
+    floorLabel: { type: String, default: "", trim: true },
     category: { type: String, enum: ROOM_CATEGORIES, default: "Room", index: true },
     summary: { type: String, default: "", trim: true },
     description: { type: [String], default: [] },

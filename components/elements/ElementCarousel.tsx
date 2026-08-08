@@ -57,7 +57,7 @@ export default function ElementCarousel() {
     <div className="w-full">
       {/* Header row — label left, controls right, as in the reference */}
       <div className="mb-2 flex items-end justify-between gap-6">
-        <h2 className="u-label opacity-50">The five elements</h2>
+        <h2 className="u-label opacity-50">The five landscapes</h2>
         <div className="flex gap-2">
           <button
             type="button"
